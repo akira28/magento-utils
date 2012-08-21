@@ -10,7 +10,7 @@ require_once 'abstract.php';
  * @author      Andrea De Pirro <andreadepirro@gmail.com>
  * @version 1
  */
-class Cb_Shell_Cleancache extends Mage_Shell_Abstract
+class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
 {
 
     var $_env;
@@ -121,5 +121,5 @@ USAGE;
 
 }
 
-$shell = new Cb_Shell_Cleancache();
+$shell = new Yameveo_Shell_Cleancache();
 $shell->run();
