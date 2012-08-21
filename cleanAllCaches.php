@@ -8,12 +8,10 @@ require_once 'abstract.php';
  * @category    Mage
  * @package     Mage_Shell
  * @author      Andrea De Pirro <andreadepirro@gmail.com>
- * @version 1
+ * @version     1
  */
 class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
 {
-
-    var $_env;
 
     /**
      * Run script
@@ -70,10 +68,11 @@ class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
         try {
             echo "Cleaning physical files...";
             flush();
-            foreach (scandir(Mage::getBaseDir('cache')) as $item) {
-                if ($item == '.' || $item == '..')
-                    continue;
-                $this->_rrmdir(Mage::getBaseDir('cache') . DIRECTORY_SEPARATOR . $item);
+            $dir = Mage::getBaseDir('cache');
+            $items = array_diff(scandir($dir), array('..', '.'));
+            foreach ($items as $item) {
+                $path = $dir . DIRECTORY_SEPARATOR . $item;
+                is_dir($path) ? $this->_rrmdir($path) : unlink($path);
             }
             echo "[OK]" . PHP_EOL . PHP_EOL;
         } catch (Exception $e) {
@@ -92,16 +91,17 @@ class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
         }
     }
 
+    /**
+     * Remove a directory and all elements contained
+     * @param string $dir directory to remove
+     */
     private function _rrmdir($dir)
     {
         if (is_dir($dir)) {
-            $objects = scandir($dir);
+            $objects = array_diff(scandir($dir), array('..', '.'));
             foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir")
-                        rrmdir($dir . "/" . $object); else
-                        unlink($dir . "/" . $object);
-                }
+                $path = $dir . DIRECTORY_SEPARATOR . $object;
+                is_dir($path) ? $this->_rrmdir($path) : unlink($path);
             }
             reset($objects);
             rmdir($dir);
