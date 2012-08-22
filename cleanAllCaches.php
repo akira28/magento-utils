@@ -22,8 +22,7 @@ class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
         ini_set("display_errors", 1);
         Mage::app('admin')->setUseSessionInUrl(false);
         Mage::getConfig()->init();
-        $types = Mage::app()->getCacheInstance()->getTypes();
-
+        
         try {
             echo "Cleaning image cache... ";
             flush();
@@ -36,6 +35,7 @@ class Yameveo_Shell_Cleancache extends Mage_Shell_Abstract
         try {
             echo "Cleaning data cache..." . PHP_EOL;
             flush();
+            $types = Mage::app()->getCacheInstance()->getTypes();
             foreach ($types as $type => $data) {
                 echo "Removing $type ... ";
                 echo Mage::app()->getCacheInstance()->clean($data["tags"]) ? "[OK]" : "[ERROR]";
