@@ -40,9 +40,11 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
      */
     public function run()
     {
-        $this->fixPermissions(Mage::getBaseDir());
+        $baseDir = Mage::getBaseDir();
+        $this->fixPermissions($baseDir);
         echo "Setting 'mage' permissions to 550" . PHP_EOL;
-        chmod("mage", 0550);
+        chmod("$baseDir/mage", 0550);
+        chmod("$baseDir/lib/PEAR", 0550);
         $this->cleanFiles();
     }
 
