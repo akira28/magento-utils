@@ -71,11 +71,11 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         }
     }
 
-    protected function cleanPhisicalCache()
+    protected function cleanFiles()
     {
         // @todo verify these functions
         try {
-            echo "Cleaning physical files:" . PHP_EOL;
+            echo "Cleaning files:" . PHP_EOL;
             ;
             flush();
             echo "Cache... ";
@@ -122,7 +122,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         $this->cleanDataCache();
         $this->cleanStoredCache();
         $this->cleanMergedJSCSS();
-        $this->cleanPhisicalCache();
+        $this->cleanFiles();
 
         if (function_exists('accelerator_reset')) {
             $this->cleanAccelerator();

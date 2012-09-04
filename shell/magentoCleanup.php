@@ -18,15 +18,18 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
      * @param type $dirModes
      * @param type $fileModes
      */
-    private function fixPermissions($dir = "./", $dirModes = 0755, $fileModes = 0644)
+    private function fixPermissions($dir = "./", $dirModes = 0755, $fileModes = 0644, $shModes = 0775)
     {
         echo "Setting all folder permissions to 755" . PHP_EOL;
         echo "Setting all file permissions to 644" . PHP_EOL;
+        echo "Setting 0775 to every .sh file..." . PHP_EOL;
         $d = new RecursiveDirectoryIterator($dir);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
-            if ($path->isDir())
+            if ($path->isDir()) // directory
                 chmod($path, $dirModes);
-            else if (is_file($path))
+            elseif (is_file($path) && strpos($path, '.sh')) // sh scripts
+                chmod($path, $shModes);
+            elseif (is_file($path)) // files
                 chmod($path, $fileModes);
         }
     }
@@ -38,21 +41,12 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
     public function run()
     {
         $this->fixPermissions(Mage::getBaseDir());
-        echo "Setting mage permissions to 550" . PHP_EOL;
+        echo "Setting 'mage' permissions to 550" . PHP_EOL;
         chmod("mage", 0550);
-        echo "Setting var, var/.htaccess, app/etc permissions to o+w";
-        // @todo verify these
-        chmod(Mage::getBaseDir('var'), 0666 );
-        chmod(Mage::getBaseDir('var') . "/.htaccess", 0666 );
-        chmod(Mage::getBaseDir('app') . "/etc", 0666 );
-        
-        // @todo change permissions to sh scripts
-        
-        $this->cleanPhisicalCache();
+        $this->cleanFiles();
     }
 
 }
-
 
 $shell = new Yameveo_Shell_Cleanup();
 $shell->run();
