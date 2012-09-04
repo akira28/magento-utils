@@ -1,3 +1,5 @@
+# @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+
 UPDATE 
     catalog_category_entity_int
 SET 

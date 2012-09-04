@@ -1,3 +1,6 @@
+# Clean the database
+# @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+
 TRUNCATE `adminnotification_inbox`;
 TRUNCATE `catalog_category_product`;
 TRUNCATE `catalog_category_product_index`;

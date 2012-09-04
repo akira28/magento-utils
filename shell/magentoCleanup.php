@@ -7,7 +7,7 @@ require_once 'cleanCache.php';
  *
  * @category    Mage
  * @package     Mage_Shell
- * @author      Andrea De Pirro <andreadepirro@gmail.com>
+ * @author      Andrea De Pirro <andrea.depirro@yameveo.com>
  * @version     1
  */
 class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache

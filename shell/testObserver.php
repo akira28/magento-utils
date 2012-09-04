@@ -7,7 +7,7 @@ require_once 'abstract.php';
  *
  * @category    Mage
  * @package     Mage_Shell
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @author      Andrea De Pirro <andrea.depirro@yameveo.com>
  */
 class Yameveo_Shell_Example extends Mage_Shell_Abstract
 {

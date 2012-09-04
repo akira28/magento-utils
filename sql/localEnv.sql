@@ -1,5 +1,5 @@
-# @author Andrea De Pirro <andreadepirro@gmail.com>
-# @version 1
+# @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+
 SET FOREIGN_KEY_CHECKS=0;
 UPDATE `core_config_data` SET `value` = "http://localhost/" WHERE `path` = "web/unsecure/base_url";
 UPDATE `core_config_data` SET `value` = "http://localhost/" WHERE `path` = "web/secure/base_url";

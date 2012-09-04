@@ -1,5 +1,10 @@
 <?php
-// Close every order before dateTo
+/**
+ * Close every order before dateTo
+ *
+ * @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+ * @version     1
+ */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once('../app/Mage.php');

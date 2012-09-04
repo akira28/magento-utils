@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Script to test methods of the Magento API
+ *
+ * @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+ * @version     1
+ */
 /**
   customer.list
   customer.create

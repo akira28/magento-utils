@@ -1,3 +1,5 @@
+# @author      Andrea De Pirro <andrea.depirro@yameveo.com>
+
 SELECT DISTINCT
     parent_id
 FROM
