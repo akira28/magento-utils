@@ -22,7 +22,7 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
     {
         echo "Setting all folder permissions to 755" . PHP_EOL;
         echo "Setting all file permissions to 644" . PHP_EOL;
-        echo "Setting 0775 to every .sh file..." . PHP_EOL;
+        echo "Setting all sh scripts permissions to 775" . PHP_EOL;
         $d = new RecursiveDirectoryIterator($dir);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
             if ($path->isDir()) // directory
@@ -44,6 +44,7 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
         $this->fixPermissions($baseDir);
         echo "Setting 'mage' permissions to 550" . PHP_EOL;
         chmod("$baseDir/mage", 0550);
+        echo "Setting 'lib/PEAR' permissions to 550" . PHP_EOL;
         chmod("$baseDir/lib/PEAR", 0550);
         $this->cleanFiles();
     }
