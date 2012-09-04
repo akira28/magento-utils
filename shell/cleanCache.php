@@ -13,8 +13,7 @@ require_once 'abstract.php';
 class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
 {
 
-   
-     protected function cleanImageCache()
+    protected function cleanImageCache()
     {
         try {
             echo "Cleaning image cache... ";
@@ -82,10 +81,10 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
             $this->_rrmdirContent(Mage::getBaseDir('cache'));
             echo "[OK]" . PHP_EOL;
             echo "Full page cache... ";
-            $this->_rrmdirContent(Mage::getBaseDir('var') . '/full_page_cache');
+            $this->_rrmdirContent(Mage::getBaseDir('var') . DIRECTORY_SEPARATOR . 'full_page_cache');
             echo "[OK]" . PHP_EOL;
             echo "Minify cache... ";
-            $this->_rrmdirContent(Mage::getBaseDir('var') . '/minifycache');
+            $this->_rrmdirContent(Mage::getBaseDir('var') . DIRECTORY_SEPARATOR . '/minifycache');
             echo "[OK]" . PHP_EOL;
             echo "Session... ";
             $this->_rrmdirContent(Mage::getBaseDir('session'));
@@ -108,6 +107,18 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         }
     }
 
+    protected function cleanAll()
+    {
+        $this->cleanImageCache();
+        $this->cleanDataCache();
+        $this->cleanStoredCache();
+        $this->cleanMergedJSCSS();
+        $this->cleanFiles();
+        if (function_exists('accelerator_reset')) {
+            $this->cleanAccelerator();
+        }
+    }
+
     /**
      * Run script
      *
@@ -117,15 +128,36 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         ini_set("display_errors", 1);
         Mage::app('admin')->setUseSessionInUrl(false);
         Mage::getConfig()->init();
-
-        $this->cleanImageCache();
-        $this->cleanDataCache();
-        $this->cleanStoredCache();
-        $this->cleanMergedJSCSS();
-        $this->cleanFiles();
-
-        if (function_exists('accelerator_reset')) {
-            $this->cleanAccelerator();
+        $caches = array('image', 'data', 'stored', 'js_css', 'files');
+        if ($this->getArg('info')) {
+            foreach ($caches as $cache) {
+                echo $cache . PHP_EOL;
+            }
+        }
+        elseif ($this->getArg('all')) {
+            $this->cleanAll();
+        }
+        elseif ($this->getArg('clean') && in_array($this->getArg('clean'), $caches)) {
+            switch ($this->getArg('clean')) {
+                case 'image':
+                    $this->cleanImageCache();
+                    break;
+                case 'data':
+                    $this->cleanDataCache();
+                    break;
+                case 'stored':
+                    $this->cleanStoredCache();
+                    break;
+                case 'js_css':
+                    $this->cleanMergedJSCSS();
+                    break;
+                case 'files':
+                    $this->cleanFiles();
+                    break;
+            }
+        }
+        else {
+            echo $this->usageHelp();
         }
     }
 
@@ -158,7 +190,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
             rmdir($dir);
         }
     }
-    
+
     /**
      * Retrieve Usage Help Message
      *
@@ -166,7 +198,16 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     public function usageHelp()
     {
         return <<<USAGE
-        Usage:  php cleanAllCaches.php
+Usage:  php cleanCaches.php -- [options]
+    
+    --clean <cache>          Execute given action
+    all                      Clean all caches
+    info                     Show allowed caches
+    help                     This help
+
+    <cache>     cache code
+
+
 USAGE;
     }
 

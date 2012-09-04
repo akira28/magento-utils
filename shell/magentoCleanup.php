@@ -14,11 +14,11 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
 {
     /**
      * Function to set file permissions to 0644 and folder permissions to 0755
-     * @param type $dir
-     * @param type $dirModes
-     * @param type $fileModes
+     * @param string $dir
+     * @param string $dirModes
+     * @param string $fileModes
      */
-    private function fixPermissions($dir = "./", $dirModes = 0755, $fileModes = 0644, $shModes = 0775)
+    private function fixPermissions($dir, $dirModes = 0755, $fileModes = 0644, $shModes = 0775)
     {
         echo "Setting all folder permissions to 755" . PHP_EOL;
         echo "Setting all file permissions to 644" . PHP_EOL;
@@ -43,9 +43,9 @@ class Yameveo_Shell_Cleanup extends Yameveo_Shell_CleanCache
         $baseDir = Mage::getBaseDir();
         $this->fixPermissions($baseDir);
         echo "Setting 'mage' permissions to 550" . PHP_EOL;
-        chmod("$baseDir/mage", 0550);
+        chmod($baseDir . DIRECTORY_SEPARATOR . "mage", 0550);
         echo "Setting 'lib/PEAR' permissions to 550" . PHP_EOL;
-        chmod("$baseDir/lib/PEAR", 0550);
+        chmod($baseDir . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "PEAR", 0550);
         $this->cleanFiles();
     }
 

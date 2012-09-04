@@ -41,7 +41,7 @@ class Yameveo_Shell_Example extends Mage_Shell_Abstract
         $functions = array('method_1', 'method_2', 'method_3', 'method_4', 'method_5');
         if ($this->getArg('info')) {
             foreach ($functions as $function) {
-                echo $function . "\n";
+                echo $function . PHP_EOL;
             }
         }
         elseif ($this->getArg('execute') && in_array($this->getArg('execute'),
