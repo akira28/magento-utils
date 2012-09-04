@@ -88,7 +88,7 @@ class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
                             break;
                     }
                 }
-                echo sprintf('%-30s ', $process->getIndexer()->getName() . ':') . $status . "\n";
+                echo sprintf('%-30s ', $process->getIndexer()->getName() . ':') . $status . PHP_EOL;
             }
         }
         elseif ($this->getArg('mode-realtime') || $this->getArg('mode-manual')) {
@@ -104,11 +104,11 @@ class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
                 /* @var $process Mage_Index_Model_Process */
                 try {
                     $process->setMode($mode)->save();
-                    echo $process->getIndexer()->getName() . " index was successfully changed index mode\n";
+                    echo $process->getIndexer()->getName() . " index was successfully changed index mode" . PHP_EOL;
                 } catch (Mage_Core_Exception $e) {
                     echo $e->getMessage() . "\n";
                 } catch (Exception $e) {
-                    echo $process->getIndexer()->getName() . " index process unknown error:\n";
+                    echo $process->getIndexer()->getName() . " index process unknown error:" . PHP_EOL;
                     echo $e . "\n";
                 }
             }
@@ -130,11 +130,11 @@ class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
                     $process->reindexEverything();
                     $end = $this->chrono();
                     $chrono = round($end - $start, 3);
-                    echo $process->getIndexer()->getName() . " index was rebuilt successfully in $chrono seconds\n";
+                    echo $process->getIndexer()->getName() . " index was rebuilt successfully in $chrono seconds" . PHP_EOL;
                 } catch (Mage_Core_Exception $e) {
                     echo $e->getMessage() . "\n";
                 } catch (Exception $e) {
-                    echo $process->getIndexer()->getName() . " index process unknown error:\n";
+                    echo $process->getIndexer()->getName() . " index process unknown error:" . PHP_EOL;
                     echo $e . "\n";
                 }
             }
