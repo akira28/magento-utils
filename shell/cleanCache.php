@@ -13,10 +13,11 @@ require_once 'abstract.php';
 class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
 {
 
-    protected function cleanImageCache()
+   
+     protected function cleanImageCache()
     {
         try {
-            echo "Cleaning image cache..." . PHP_EOL;
+            echo "Cleaning image cache... ";
             ;
             flush();
             echo Mage::getModel('catalog/product_image')->clearCache();
@@ -29,7 +30,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     protected function cleanDataCache()
     {
         try {
-            echo "Cleaning data cache..." . PHP_EOL;
+            echo "Cleaning data cache:" . PHP_EOL;
             flush();
             $types = Mage::app()->getCacheInstance()->getTypes();
             foreach ($types as $type => $data) {
@@ -46,7 +47,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     protected function cleanMergedJSCSS()
     {
         try {
-            echo "Cleaning merged JS/CSS..." . PHP_EOL;
+            echo "Cleaning merged JS/CSS... ";
             ;
             flush();
             Mage::getModel('core/design_package')->cleanMergedJsCss();
@@ -60,7 +61,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     protected function cleanStoredCache()
     {
         try {
-            echo "Cleaning stored cache..." . PHP_EOL;
+            echo "Cleaning stored cache... ";
             ;
             flush();
             echo Mage::app()->getCacheInstance()->clean() ? "[OK]" : "[ERROR]";
@@ -74,14 +75,22 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     {
         // @todo verify these functions
         try {
-            echo "Cleaning physical files..." . PHP_EOL;
+            echo "Cleaning physical files:" . PHP_EOL;
             ;
             flush();
+            echo "Cache... ";
             $this->_rrmdirContent(Mage::getBaseDir('cache'));
-            $this->_rrmdirContent(Mage::getBaseDir('full_page_cache'));
-            $this->_rrmdirContent(Mage::getBaseDir('minifycache'));
+            echo "[OK]" . PHP_EOL;
+            echo "Full page cache... ";
+            $this->_rrmdirContent(Mage::getBaseDir('var') . '/full_page_cache');
+            echo "[OK]" . PHP_EOL;
+            echo "Minify cache... ";
+            $this->_rrmdirContent(Mage::getBaseDir('var') . '/minifycache');
+            echo "[OK]" . PHP_EOL;
+            echo "Session... ";
             $this->_rrmdirContent(Mage::getBaseDir('session'));
-            echo "[OK]" . PHP_EOL . PHP_EOL;
+            echo "[OK]" . PHP_EOL;
+            echo PHP_EOL;
         } catch (Exception $e) {
             die("[ERROR:" . $e->getMessage() . "]" . PHP_EOL);
         }
@@ -90,7 +99,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     protected function cleanAccelerator()
     {
         try {
-            echo "Cleaning accelerator...";
+            echo "Cleaning accelerator... ";
             flush();
             accelerator_reset();
             echo "[OK]" . PHP_EOL . PHP_EOL;
@@ -149,7 +158,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
             rmdir($dir);
         }
     }
-
+    
     /**
      * Retrieve Usage Help Message
      *
