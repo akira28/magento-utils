@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- * 
+ *
  * @category    Mage
  * @package     Mage_Shell
  * @author      Andrea De Pirro <andrea.depirro@yameveo.com>
@@ -28,11 +28,14 @@ require_once 'abstract.php';
 class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
 {
 
+    /**
+     * Cleans image cache using catalog/product_image model.
+     *
+     */
     protected function cleanImageCache()
     {
         try {
             echo "Cleaning image cache... ";
-            ;
             flush();
             echo Mage::getModel('catalog/product_image')->clearCache();
             echo "[OK]" . PHP_EOL . PHP_EOL;
@@ -41,6 +44,16 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         }
     }
 
+    /**
+     * Cleans magento data cache:
+     * - config,
+     * - layout,
+     * - block_html
+     * - translate,
+     * - collections,
+     * - eav,
+     * - config_api
+     */
     protected function cleanDataCache()
     {
         try {
@@ -62,7 +75,6 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     {
         try {
             echo "Cleaning merged JS/CSS... ";
-            ;
             flush();
             Mage::getModel('core/design_package')->cleanMergedJsCss();
             Mage::dispatchEvent('clean_media_cache_after');
@@ -76,7 +88,6 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     {
         try {
             echo "Cleaning stored cache... ";
-            ;
             flush();
             echo Mage::app()->getCacheInstance()->clean() ? "[OK]" : "[ERROR]";
             echo PHP_EOL . PHP_EOL;
@@ -85,12 +96,20 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         }
     }
 
+    /**
+     * Does a rmdir on:
+     * - cache,
+     * - var/full_page_cache
+     * - var/minifycache
+     * - session dir
+     *
+     * @todo verify these functions
+     * @todo check var dir for any other cleanable subdirs.
+     */
     protected function cleanFiles()
     {
-        // @todo verify these functions
         try {
             echo "Cleaning files:" . PHP_EOL;
-            ;
             flush();
             echo "Cache... ";
             $this->_rrmdirContent(Mage::getBaseDir('cache'));
@@ -145,14 +164,19 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
         Mage::getConfig()->init();
         $caches = array('image', 'data', 'stored', 'js_css', 'files');
         if ($this->getArg('info')) {
+            echo 'Allowed caches: ' . PHP_EOL;
             foreach ($caches as $cache) {
-                echo $cache . PHP_EOL;
+                echo "\t" . $cache . PHP_EOL;
             }
+            die();
         }
-        elseif ($this->getArg('all')) {
+
+        if ($this->getArg('all')) {
             $this->cleanAll();
+            die();
         }
-        elseif ($this->getArg('clean') && in_array($this->getArg('clean'), $caches)) {
+
+        if ($this->getArg('clean') && in_array($this->getArg('clean'), $caches)) {
             switch ($this->getArg('clean')) {
                 case 'image':
                     $this->cleanImageCache();
@@ -170,8 +194,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
                     $this->cleanFiles();
                     break;
             }
-        }
-        else {
+        } else {
             echo $this->usageHelp();
         }
     }
@@ -214,13 +237,11 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     {
         return <<<USAGE
 Usage:  php cleanCaches.php -- [options]
-    
-    --clean <cache>          Execute given action
+
+    --clean <cache>          Clean <cache>. Any of [image|data|stored|js_css|files]
     all                      Clean all caches
     info                     Show allowed caches
     help                     This help
-
-    <cache>     cache code
 
 
 USAGE;
