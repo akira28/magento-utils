@@ -118,7 +118,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
             $this->_rrmdirContent(Mage::getBaseDir('var') . DIRECTORY_SEPARATOR . 'full_page_cache');
             echo "[OK]" . PHP_EOL;
             echo "Minify cache... ";
-            $this->_rrmdirContent(Mage::getBaseDir('var') . DIRECTORY_SEPARATOR . '/minifycache');
+            $this->_rrmdirContent(Mage::getBaseDir('var') . DIRECTORY_SEPARATOR . 'minifycache');
             echo "[OK]" . PHP_EOL;
             echo "Session... ";
             $this->_rrmdirContent(Mage::getBaseDir('session'));
