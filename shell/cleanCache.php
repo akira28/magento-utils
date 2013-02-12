@@ -242,7 +242,7 @@ class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
     public function usageHelp()
     {
         return <<<USAGE
-Usage:  php cleanCaches.php -- [options]
+Usage:  php cleanCache.php -- [options]
 
     --clean <cache>          Clean <cache>. Any of [image|data|stored|js_css|files]
     all                      Clean all caches
