@@ -23,7 +23,7 @@
  * @version     1
  */
 
-require_once 'abstract.php';
+require_once './shell/abstract.php';
 
 class Yameveo_Shell_CleanCache extends Mage_Shell_Abstract
 {
