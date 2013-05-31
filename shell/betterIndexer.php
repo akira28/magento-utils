@@ -25,7 +25,7 @@
  */
 require_once 'indexer.php';
 
-class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
+class Yameveo_Shell_Indexer extends Mage_Shell_Compiler
 {
 
     /**
@@ -142,12 +142,21 @@ class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
             $totalchrono = round($totalend - $totalstart, 3);
             echo PHP_EOL;
             echo "All completed in $totalchrono seconds" . PHP_EOL;
+            $mem = $this->_convertMemorySize(memory_get_usage());
+            $peak = $this->_convertMemorySize(memory_get_peak_usage());
+            echo "Used memory: $mem. Peak memory: $peak";
+            echo PHP_EOL;
         }
         else {
             echo $this->usageHelp();
         }
     }
-
+    
+    private function _convertMemorySize($size)
+    {
+        $unit = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . $unit[$i];
+    }
 }
 
 $shell = new Yameveo_Shell_Indexer();
