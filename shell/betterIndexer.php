@@ -141,7 +141,7 @@ class Yameveo_Shell_Indexer extends Mage_Shell_Indexer
             $totalend = $this->chrono();
             $totalchrono = round($totalend - $totalstart, 3);
             echo PHP_EOL;
-            echo "All completed in $totalchrono" . " seconds" . PHP_EOL;
+            echo "All completed in $totalchrono seconds" . PHP_EOL;
         }
         else {
             echo $this->usageHelp();
