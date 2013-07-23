@@ -1,6 +1,6 @@
 # Clean the database
 # @author      Andrea De Pirro <andrea.depirro@yameveo.com>
-
+SET FOREIGN_KEY_CHECKS=0;
 TRUNCATE `adminnotification_inbox`;
 TRUNCATE `catalog_category_product`;
 TRUNCATE `catalog_category_product_index`;
@@ -69,3 +69,4 @@ TRUNCATE `sales_flat_quote_payment`;
 TRUNCATE `sales_order_tax`;
 TRUNCATE `sales_payment_transaction`;
 TRUNCATE `wishlist`;
+SET FOREIGN_KEY_CHECKS=1;
