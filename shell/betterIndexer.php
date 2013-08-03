@@ -24,7 +24,8 @@
  * @version     1
  */
 require_once 'indexer.php';
-
+ini_set('memory_limit', '1024M'); 
+set_time_limit (1800);
 class Yameveo_Shell_Indexer extends Mage_Shell_Compiler
 {
 
